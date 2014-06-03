@@ -4,7 +4,7 @@ before_action :set_admin, only: [:links, :new, :create, :edit, :update, :categor
 :category_sale_edit_post, :product_sale, :product_sale_edit_post]
 
 def index
-  render :index, layout: false and return
+  render :links, layout: false and return
 end
 
 def signin
