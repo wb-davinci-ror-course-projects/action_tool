@@ -1,0 +1,36 @@
+<%= form_tag carts_path do %>
+
+<div class="pad_col">
+  <div class="row">
+    <div class="col-md-12">
+      <center><b><h3 class="pad" style="color: #550808; text-shadow: 2px 1px 1px white;">
+                    <%= @product.name.upcase %></h3></b>
+      </center>
+      <table> 
+        <th>
+          <a href='/images/<%= @product.image %>_big.jpg/'>
+            <img class="image_big" src="/images/<%= @product.image %>.jpg/"></img>
+          </a>
+        </th>
+        <td><p class="pad" style="color: rgb(9, 9, 145); background: white;"><%= @product.more_info %></p>
+            <h4 class="pad" style="color=black"><i>price  </i>$<%= "%.2f" % @product.price %></h4>
+            <h4 class="pad"><%= @product.description %></h4>
+            <% CategorySale.where(category_id: @product.category_id).each do |s| %>
+              <% if s.percent_off > 1 %>
+                <% price = (@product.price) * ((100-s.percent_off)/100) %>
+                  <h4 class="sale_price""><%= "Sale Price! $ #{"%.2f" % price}" %></h4>
+              <% else %>
+                <% if @product.percent_off > 1 %>
+                  <% price = (@product.price) * ((100-@product.percent_off)/100) %>
+                  <h4 class="sale_price"><%= "Sale Price! $ #{"%.2f" % price}" %></h4>
+                <% end %>
+              <% end %>
+            <% end %>
+            <%= add_to_cart (@product) %>
+        </td>
+      </table>             
+    </div>         
+  </div>
+</div>
+
+<% end %>

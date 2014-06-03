@@ -1,0 +1,109 @@
+<%= form_tag place_order_path, method: "PUT" do %>
+<h2 style="color: rgba(3, 3, 100, 0.8)">Product List</h2>
+<div class="row pad">
+<div class="col-md-6 pull-left">
+  <table class="table-condensed table-striped table-border">
+    <thead>
+      <tr>
+        <th style="color: white">Product Name</th>
+        <th style="color: white">Price</th>
+        <th style="color: white">Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% session[:total] = 0 %>
+      <% @carts.each do |cart| %>
+      <% p = Product.find(cart.product_id) %>
+        <tr>
+          <% if cart.quantity != 0 %>
+            <td><%= p.name.titleize %></td>
+            <td style="text-align: right">$<%= "%.2f" % cart.price %></td>
+            <td style="text-align: right"><h4><%= cart.quantity %></h4></td>
+          <% end %>
+            <% if @carts != false %>
+            <% session[:total] += cart.price * cart.quantity %>
+            <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="col-md-4">
+  <table class="table-condensed">
+    <% products_total = session[:total] %>
+      <tr><td><h4 style="color: rgba(6, 72, 133, 0.85); text-align: right;">
+        <%= "Products total:    $#{"%.2f" % products_total}" %>
+      </h4></td></tr>
+    <% if @empty == "yes" %>  
+      <% ship_cost = 0 %>
+    <% else %>
+      <% ship_cost = 7 %>
+      <%= hidden_field_tag "ship_cost", ship_cost %>
+    <% end %>
+      <tr><td><h4 style="color: rgba(6, 72, 133, 0.85); text-align: right;">
+        <%= "Shipping cost:    $#{"%.2f" % ship_cost}" %>
+      </h4></td></tr>
+    <% tax = products_total * 0.029 %>
+    <%= hidden_field_tag "tax", tax %>
+      <tr><td><h4 style="color: rgba(6, 72, 133, 0.85); text-align: right;">
+        <%= "Taxes:    $#{"%.2f" %  tax}" %></td></tr>
+      <tr><td><h4 style="color: rgba(3, 3, 100, 0.8); text-align: right;"><b>
+        <% order_total = ship_cost + tax + products_total %>
+        <%= "Order total:    $#{"%.2f" % (order_total)}" %>
+        <%= hidden_field_tag "order_total", order_total %>
+      </b></h4></td></tr></h4>
+  </table>   
+</div>
+
+<div class="pad pull-left">
+<hr style="background-color:white; height:2px;" />
+  <h4>(During this testing phase, if you want the transaction 
+      to complete use credit info already entered)
+  <h4 style="color: white">Enter payment information as it is shown on card::<h4>
+  <h5>
+    <div class="col-md-6 pull-left">
+     <% if User.find_by(username: session[:username]) == "bob" %>
+     <%= label_tag :credit_number, "Credit Card Number" %>
+     <%= text_field_tag :credit_number,'4242424242424242' %><br></br>
+     <%= label_tag :credit_month, "Month of Expiration" %>
+        <%= select_tag :credit_month, user.credit_month, 
+            prompt: "" %><br></br>
+     <%= label_tag :credit_year, "Year of Expiration" %>
+     <%= text_field_tag :credit_year, '2015', size: 5 %><br></br>
+    </div>
+    <div class="col-md-3 pull-right">
+        <%= label_tag :credit_first_name, "First Name" %>
+        <%= text_field_tag :credit_first_name, user.credit_first_name %><br></br>
+        <%= label_tag :credit_last_name, "Last Name" %>
+        <%= text_field_tag :credit_last_name, user.credit_last_name %><br></br>
+        <%= label_tag :credit_security_code, "Security Code" %>
+        <%= text_field_tag :credit_security_code, user.credit_security_code %>
+    </div>
+      <% else %>
+    <div class="col-md-7 pull-left">
+       <%= label_tag :credit_number, "Credit Card Number" %>
+       <%= text_field_tag :credit_number,'4242424242424242' %><br></br>
+       <%= label_tag :credit_month, "Month of Expiration" %>
+          <%= select_tag :credit_month, options_for_select(months, 8), 
+              prompt: "" %><br></br>
+       <%= label_tag :credit_year, "Year of Expiration" %>
+       <%= text_field_tag :credit_year, '2015', size: 5 %><br></br>
+    </div>
+    <div class="col-md-5 pull-right">
+        <%= label_tag :credit_first_name, "First Name" %>
+        <%= text_field_tag :credit_first_name,'Bob' %><br></br>
+        <%= label_tag :credit_last_name, "Last Name" %>
+        <%= text_field_tag :credit_last_name, 'Bobsen' %><br></br>
+        <%= label_tag :credit_security_code, "Security Code" %>
+        <%= text_field_tag :credit_security_code, '000' %>
+     </div> 
+      <% end %>
+  </h5>
+ </div>
+</div>
+<center>
+  <input class="btn btn-danger" name="Place Order" type="submit" value="Place Order"><br></br>
+</center>
+<% end %>
+

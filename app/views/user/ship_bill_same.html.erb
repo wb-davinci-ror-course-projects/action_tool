@@ -1,0 +1,44 @@
+<!--
+<%= form_tag ship_update_path, method: "PUT" do %>
+
+<% if @error != nil %>
+  <h2 style="color: rgb(156, 18, 18)"><%= @error %></h2>
+<% end %>
+
+<div class="row pad">
+  <div class="col-md-4 pull-left">
+    <h4 style="color: rgba(3, 3, 100, 0.8)">
+     
+        <%= label_tag "shipping_first_name", "First name" %><br>
+        <%= text_field_tag "shipping_first_name", @user.shipping_first_name, size: 20 %><br></br>
+      
+        <%= label_tag "shipping_last_name", "Last name" %><br>
+        <%= text_field_tag "shipping_last_name", @user.shipping_last_name, size: 20 %><br></br>
+      
+        <%= label_tag "shipping_address1", "Street address" %><br>
+        <%= text_field_tag "shipping_address1", @user.shipping_address1, size: 20 %><br></br>
+      
+        <%= label_tag "shipping_address2", "Street address (continued)" %><br>
+        <%= text_field_tag "shipping_address2", @user.shipping_address2, size: 20 %><br></br>
+  </div>
+  <div class="col-md-4 pull-left">
+    <h4 style="color: rgba(3, 3, 100, 0.8)">
+        <%= label_tag "shipping_city", "City" %><br>
+        <%= text_field_tag "shipping_city", @user.shipping_city, size: 20 %><br></br>
+        
+        <%= label_tag "shipping_state", "State" %><br>
+        <%= select_tag :shipping_state, options_for_select(us_states, @user.billing_state) %><br></br>
+      
+        <%= label_tag "shipping_zip", "Zip Code" %><br>
+        <%= text_field_tag "shipping_zip", @user.shipping_zip, size: 20 %><br></br>
+      
+        <%= label_tag "shipping_phone_number", "Phone number" %><br>
+        <%= text_field_tag "shipping_phone_number", @user.shipping_phone_number, size: 20 %><br></br>
+       
+        <%= submit_tag "Continue" %>
+    </h4> 
+  </div>
+</div>
+
+<% end %>
+--!>
