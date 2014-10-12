@@ -8,13 +8,13 @@ def index
 end
 
 def signin
-  if params[:username] == "wendy"
+  if params[:username] == "jack"
     user = User.find_by(username: params[:username])
   else 
     redirect_to home_page_path
   end
   
-  if user.authenticate(params[:password]) != false
+  if user && user.authenticate(params[:password]) 
     render :links, layout: false and return
   else
       flash[:danger] = "Username or password was entered incorrectly or isn't authorized. 
@@ -177,7 +177,7 @@ end
 private
 
 def set_admin
-  if session[:username] != "wendy"
+  if session[:username] != "jack"
     render :index, layout: false and return
   end
 end

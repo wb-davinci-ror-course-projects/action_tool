@@ -142,6 +142,9 @@ text-shadow: 2px 1px 1px white;
   color: rgb(8, 8, 102);
   text-shadow: 1px 1px 1px rgb(0, 133, 255);
 }
+.contact {
+  padding-right: 50px;
+}
 .ats_header_b {
   font-size: 25pt;
   margin: -10px auto -20px auto;
@@ -186,6 +189,10 @@ text-shadow: 2px 1px 1px white;
 .pad_left {
   padding: 10px 10px 10px 50px;
 }
+.pad_contact {
+  padding: 0px 100px 50px 100px;
+}
+
 .pad_col {
   padding: 0px 50px 10px 50px;
 }

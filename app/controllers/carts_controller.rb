@@ -1,7 +1,10 @@
 class CartsController < ApplicationController
-  #before_action :set_cart, only: [:show, :edit, :update, :destroy]
-   before_action  :check_quantity, only: [:create, :update]
-   before_action  :product_quantity_update, only: [:create] 
+
+before_action :send_home
+
+#    before_action :set_cart, only: [:show, :edit, :update, :destroy]
+#    before_action  :check_quantity, only: [:create, :update]
+#    before_action  :product_quantity_update, only: [:create] 
   
   def index
     @carts = Cart.where(cart_id: session[:cart_id])
@@ -228,6 +231,12 @@ class CartsController < ApplicationController
         cart.delete
       end
     end
+  end
+  
+  private
+  
+  def send_home
+    redirect_to '/'
   end
     # Use callbacks to share common setup or constraints between actions.
 #     def set_cart

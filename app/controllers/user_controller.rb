@@ -1,5 +1,6 @@
-
 class UserController < ApplicationController
+
+before_action :send_home, only: [:ship_bill_info, :update_ship, :user_orders, :past_order]
 
 def index
   if params[:page] != nil
@@ -246,5 +247,12 @@ def logout
     session.clear
   redirect_to "/" and return
 end
+
+  private
+  
+  def send_home
+    redirect_to '/'
+  end
+
 
 end
