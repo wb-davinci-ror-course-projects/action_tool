@@ -14,7 +14,8 @@ def signin
     redirect_to home_page_path
   end
   
-  if user && user.authenticate(params[:password]) 
+  if user && user.authenticate(params[:password])
+    session[:username] = 'jack' 
     render :links, layout: false and return
   else
       flash[:danger] = "Username or password was entered incorrectly or isn't authorized. 
