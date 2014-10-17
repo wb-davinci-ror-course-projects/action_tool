@@ -1,6 +1,7 @@
 class UserController < ApplicationController
 
 before_action :send_home, only: [:ship_bill_info, :update_ship, :user_orders, :past_order]
+before_action :check_user, only: [:edit, :update]
 
 def index
   if params[:page] != nil
@@ -252,6 +253,12 @@ end
   
   def send_home
     redirect_to '/'
+  end
+  
+  def check_user
+    if session[:username] == nil
+      redirect_to '/'
+    end
   end
 
 
